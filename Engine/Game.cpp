@@ -21,12 +21,12 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd )
-{
-}
+	wnd(wnd),
+	gfx(wnd),
+	ladrillin(Vec2(100.0f, 100.0f), 50.0f, 50.0f, Colors::Blue)
+{}
 
 void Game::Go()
 {
@@ -42,4 +42,5 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
+	ladrillin.Draw(gfx);
 }
