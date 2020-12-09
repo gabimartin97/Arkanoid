@@ -25,7 +25,8 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	ladrillin(Vec2(100.0f, 100.0f), 50.0f, 50.0f, Colors::Blue)
+	ladrillin(Vec2(100.0f, 100.0f), 50.0f, 50.0f, Colors::Blue),
+	ball(Vec2(200.0f, 300.0f), Vec2(10, 10))
 {}
 
 void Game::Go()
@@ -38,9 +39,11 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+
 }
 
 void Game::ComposeFrame()
 {
 	ladrillin.Draw(gfx);
+	ball.Draw(gfx);
 }
