@@ -26,7 +26,9 @@ Game::Game(MainWindow& wnd)
 	wnd(wnd),
 	gfx(wnd),
 	ladrillin(Vec2(100.0f, 100.0f), 50.0f, 50.0f, Colors::Blue),
-	ball(Vec2(200.0f, 300.0f), Vec2(10, 10))
+	ball(Vec2(200.0f, 300.0f), Vec2(-100, -100)),
+	walls(Vec2(0,0),Vec2(int(gfx.ScreenWidth),int(gfx.ScreenHeight)))
+	
 {}
 
 void Game::Go()
@@ -39,7 +41,9 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-
+	float dt=ft.Mark();
+	ball.Update(dt);
+	ball.DoWallCollision(walls);
 }
 
 void Game::ComposeFrame()

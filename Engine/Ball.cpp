@@ -2,11 +2,51 @@
 
 Ball::Ball(const Vec2 & center, const Vec2 & velocity_in)
 {
-	position = center;
+	position_center = center;
 	velocity = velocity_in;
 }
 
-void Ball::Draw(Graphics& gfx)
+void Ball::Draw(Graphics& gfx) const
 {
-	SpriteCodex::DrawBall(position, gfx);
+	SpriteCodex::DrawBall(position_center, gfx);
+}
+
+void Ball::Update(const float dt)
+{
+	position_center = position_center + velocity * dt;
+}
+
+void Ball::DoWallCollision(const RectF & walls)
+{
+	if (position_center.x - radius <= walls.topLeft.x)
+	{
+		ReboundX();
+		position_center.x = walls.topLeft.x + radius;
+	}
+	else if (position_center.x + radius >= walls.bottomRight.x)
+	{
+		ReboundX();
+		position_center.x = walls.bottomRight.x - radius;
+	}
+	if (position_center.y - radius <= walls.topLeft.y)
+	{
+		ReboundY();
+		position_center.y = walls.topLeft.y + radius;
+	}
+	else if (position_center.y + radius >= walls.bottomRight.y)
+	{
+		ReboundY();
+		position_center.y = walls.bottomRight.y - radius;
+	}
+	
+}
+
+void Ball::ReboundX()
+{
+	velocity.x = -velocity.x;
+}
+
+void Ball::ReboundY()
+{
+	velocity.y = -velocity.y;
 }

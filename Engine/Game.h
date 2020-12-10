@@ -25,6 +25,7 @@
 #include "Graphics.h"
 #include "Brick.h"
 #include "Ball.h"
+#include "FrameTimer.h"
 class Game
 {
 public:
@@ -41,9 +42,12 @@ private:
 private:
 	MainWindow& wnd;
 	Graphics gfx;
-	Brick ladrillin;
-	Ball ball;
+	
 	/********************************/
 	/*  User Variables              */
+	Brick ladrillin;
+	Ball ball;
+	FrameTimer ft;
+	RectF walls;
 	/********************************/
 };
