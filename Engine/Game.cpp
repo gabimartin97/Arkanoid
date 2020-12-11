@@ -26,7 +26,7 @@ Game::Game(MainWindow& wnd)
 	wnd(wnd),
 	gfx(wnd),
 	ladrillin(Vec2(100.0f, 100.0f), 100.0f, 50.0f, Colors::Blue),
-	ball(Vec2(200, 340.0f), Vec2(-200, -200)),
+	ball(Vec2(300, 400), Vec2(200, -200)),
 	walls(Vec2(0,0),Vec2(int(gfx.ScreenWidth),int(gfx.ScreenHeight)))
 	
 {}

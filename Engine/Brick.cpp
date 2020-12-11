@@ -18,11 +18,18 @@ void Brick::Draw(Graphics & gfx) const
 
 void Brick::DoBallCollision(Ball & ball)
 {
-	
-	if (rect.IsOverlappingWith(ball.GetHitbox()))
-	{
+	RectF ballHitbox = ball.GetHitbox();
+	if (rect.IsOverlappingWith(ballHitbox)) {
 		isDestroyed = true;
+		if (ballHitbox.top <= rect.bottom && ballHitbox.bottom >= rect.bottom) ball.ReboundY();
+		else
+			if (ballHitbox.bottom >= rect.top && ballHitbox.top <= rect.top) ball.ReboundY();
+
+		if (ballHitbox.right >= rect.left && ballHitbox.right <= rect.left) ball.ReboundX();
+		else
+			if (ballHitbox.left <= rect.right && ballHitbox.left >= rect.right) ball.ReboundX();
 	}
+	
 }
 
 bool Brick::IsDestroyed() const

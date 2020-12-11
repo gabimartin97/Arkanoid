@@ -17,7 +17,8 @@ void Ball::Draw(Graphics& gfx) const
 void Ball::Update(const float dt)
 {
 	position_center = position_center + velocity * dt;
-	hitbox = RectF(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
+	hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
+	
 }
 
 void Ball::DoWallCollision(const RectF & walls)

@@ -4,41 +4,51 @@ RectF::RectF(const Vec2 & topLeft_in, const Vec2 &bottomRight_in)
 {
 	topLeft = topLeft_in;
 	bottomRight = bottomRight_in;
+	 left = topLeft.x;
+	 right = bottomRight.x;
+	 top = topLeft.y;
+	 bottom = bottomRight.y;
+
 }
 
 RectF::RectF(const Vec2 & topLeft_in, const float width, const float height)
+	:
+	RectF(topLeft_in, Vec2(topLeft_in.x + width, topLeft_in.y + height))
 {
-	topLeft = topLeft_in;
-	bottomRight = Vec2(topLeft_in.x + width, topLeft_in.y + height);
 }
 
-bool RectF::IsOverlappingWith(const RectF & rect_in) const
+void RectF::Update(const Vec2 & topLeft_in, const Vec2 & bottomRight_in)
 {
-	float left = topLeft.x;
-	float right = bottomRight.x;
-	float top = topLeft.y;
-	float bottom = bottomRight.y;
-	float left_in = rect_in.topLeft.x;
-	float right_in = rect_in.bottomRight.x;
-	float top_in = rect_in.topLeft.y;
-	float bottom_in = rect_in.bottomRight.y;
-	bool overlappingX = false;
-	bool overlappingY = false;
-
-		if ((right_in >= left && right_in <= right) || (left_in >= left && left_in <= right)) {
-			overlappingX = true;
-		}
-
-		if ((top_in <= bottom && top_in >= top) || (bottom_in <= bottom && bottom_in >= top)) {
-			overlappingY = true;
-		}
-
-	return (overlappingX && overlappingY);
+	topLeft = topLeft_in;
+	bottomRight = bottomRight_in;
+	left = topLeft.x;
+	right = bottomRight.x;
+	top = topLeft.y;
+	bottom = bottomRight.y;
 }
 
 RectF RectF::FromCenter(const Vec2 & center, const float halfWidth, const float halfHeight)
 {
 	Vec2 topLeft = center - Vec2(halfWidth, halfHeight);
 	Vec2 bottomRight = center + Vec2(halfWidth, halfHeight);
-	return RectF(topLeft,bottomRight);
+	return RectF(topLeft, bottomRight);
 }
+
+
+bool RectF::IsOverlappingWith(const RectF & rect_in) const
+{
+	bool overlappingX = false;
+	bool overlappingY = false;
+
+		if ((rect_in.right >= left && rect_in.right <= right) || (rect_in.left >= left && rect_in.left <= right)) {
+			overlappingX = true;
+		}
+
+		if ((rect_in.top <= bottom && rect_in.top >= top) || (rect_in.bottom <= bottom && rect_in.bottom >= top)) {
+			overlappingY = true;
+		}
+
+	return (overlappingX && overlappingY);
+}
+
+
