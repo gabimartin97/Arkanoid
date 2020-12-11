@@ -15,3 +15,19 @@ void Brick::Draw(Graphics & gfx) const
 {
 	gfx.DrawRect(rect, c);
 }
+
+void Brick::DoBallCollision(Ball & ball)
+{
+	
+	if (rect.IsOverlappingWith(ball.GetHitbox()))
+	{
+		isDestroyed = true;
+	}
+}
+
+bool Brick::IsDestroyed() const
+{
+	return isDestroyed;
+}
+
+

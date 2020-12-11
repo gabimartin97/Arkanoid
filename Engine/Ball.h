@@ -13,9 +13,14 @@ public:
 	void DoWallCollision(const RectF& walls);
 	void ReboundX();
 	void ReboundY();
+	RectF GetHitbox()const;
+
 
 private:
 	Vec2 position_center;
 	Vec2 velocity;
+	RectF hitbox;
+	
 	static constexpr int radius = 7;
+	
 };

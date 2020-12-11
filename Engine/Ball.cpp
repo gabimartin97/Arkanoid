@@ -1,9 +1,12 @@
 #include "Ball.h"
 
 Ball::Ball(const Vec2 & center, const Vec2 & velocity_in)
+	:
+	hitbox(Vec2(center.x-radius,center.y-radius),Vec2(center.x + radius, center.y + radius))
 {
 	position_center = center;
 	velocity = velocity_in;
+		
 }
 
 void Ball::Draw(Graphics& gfx) const
@@ -14,6 +17,7 @@ void Ball::Draw(Graphics& gfx) const
 void Ball::Update(const float dt)
 {
 	position_center = position_center + velocity * dt;
+	hitbox = RectF(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
 }
 
 void Ball::DoWallCollision(const RectF & walls)
@@ -49,4 +53,9 @@ void Ball::ReboundX()
 void Ball::ReboundY()
 {
 	velocity.y = -velocity.y;
+}
+
+RectF Ball::GetHitbox() const
+{
+	return hitbox;
 }
