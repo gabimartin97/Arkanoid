@@ -25,11 +25,23 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	ladrillin(Vec2(100.0f, 100.0f), 100.0f, 50.0f, Colors::Blue),
+	//ladrillin(Vec2(100.0f, 100.0f), 100.0f, 50.0f, Colors::Blue),
 	ball(Vec2(300, 400), Vec2(200, -200)),
 	walls(Vec2(0,0),Vec2(int(gfx.ScreenWidth),int(gfx.ScreenHeight)))
 	
-{}
+{
+	int offsetX = 100;
+	int offsetY = 100;
+	int i = 0;
+
+	for (int k = 0; k < nBrickRows; k++) {
+		for (int j = 0; j < nBrickColumns; j++) {
+
+			bricks[i] = Brick(Vec2(offsetX + brickWidth * j, offsetY + brickHeight * k), brickWidth, brickHeight, Colors::Blue);
+			i++;
+		}
+	}
+}
 
 void Game::Go()
 {
@@ -44,14 +56,20 @@ void Game::UpdateModel()
 	float dt=ft.Mark();
 	ball.Update(dt);
 	ball.DoWallCollision(walls);
-	ladrillin.DoBallCollision(ball);
+	for (Brick& b : bricks)
+	{
+		if (!b.IsDestroyed())b.DoBallCollision(ball);
+		
+	}
+	
 	
 }
 
 void Game::ComposeFrame()
 {
-	if (!ladrillin.IsDestroyed()) {
-		ladrillin.Draw(gfx);
+	for (const Brick& b : bricks)
+	{
+		if (!b.IsDestroyed())b.Draw(gfx);
 	}
 	
 	ball.Draw(gfx);

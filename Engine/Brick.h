@@ -7,7 +7,9 @@ class Brick
 {
 	
 public:
+	Brick() = default;
 	Brick(const Vec2 & topLeft_in, const float width_in, const float height_in, const Color& c_in);
+
 	void Draw(Graphics& gfx ) const;
 	void DoBallCollision(Ball& ball);
 	bool IsDestroyed() const;

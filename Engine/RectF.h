@@ -4,6 +4,7 @@
 class RectF {
 
 public:
+	RectF() = default;
 	RectF(const Vec2& topLeft_in, const Vec2& bottomRight_in);
 	RectF(const Vec2& topLeft_in, const float width, const float height);
 	void Update(const Vec2& topLeft_in, const Vec2& bottomRight_in);

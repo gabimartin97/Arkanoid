@@ -45,9 +45,16 @@ private:
 	
 	/********************************/
 	/*  User Variables              */
-	Brick ladrillin;
+	static constexpr int nBricks = 18;
+	static constexpr int nBrickColumns = 6;
+	static constexpr int nBrickRows = 3;
+	static constexpr int brickWidth = 80;
+	static constexpr int brickHeight = 40;
+	Brick bricks[nBricks];
 	Ball ball;
 	FrameTimer ft;
 	RectF walls;
+	
+	
 	/********************************/
 };
