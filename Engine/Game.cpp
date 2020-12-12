@@ -25,8 +25,8 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	//ladrillin(Vec2(100.0f, 100.0f), 100.0f, 50.0f, Colors::Blue),
 	ball(Vec2(300, 400), Vec2(200, -200)),
+	pad(Vec2(400, 520), 80.0f, 25.0f, Colors::Magenta),
 	walls(Vec2(0,0),Vec2(int(gfx.ScreenWidth),int(gfx.ScreenHeight)))
 	
 {
@@ -52,19 +52,31 @@ void Game::Go()
 }
 
 void Game::UpdateModel()
-{
-	float dt=ft.Mark();
+{	
+	
+	float dt = ft.Mark();
+
+	
+
+	if (!wnd.kbd.KeyIsEmpty()) {
+		if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
+			unsigned char data = 'l';
+			pad.Update(dt, data );
+			
+		}
+		else if (wnd.kbd.KeyIsPressed(VK_RIGHT)) {
+
+			unsigned char data = 'r';
+			pad.Update(dt, data);
+			
+		}
+	}
+
 	ball.Update(dt);
 	ball.DoWallCollision(walls);
-	for (Brick& b : bricks)
-	{
-		if (!b.IsDestroyed())b.DoBallCollision(ball);
-		
-	}
-	
-	
+	for (Brick& b : bricks)if (!b.IsDestroyed())b.DoBallCollision(ball);
+	pad.DoWallCollision(walls);
 }
-
 void Game::ComposeFrame()
 {
 	for (const Brick& b : bricks)
@@ -73,4 +85,5 @@ void Game::ComposeFrame()
 	}
 	
 	ball.Draw(gfx);
+	pad.Draw(gfx);
 }

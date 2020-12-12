@@ -25,9 +25,9 @@ void Brick::DoBallCollision(Ball & ball)
 		else
 			if (ballHitbox.bottom >= rect.top && ballHitbox.top <= rect.top) ball.ReboundY();
 
-		if (ballHitbox.right >= rect.left && ballHitbox.right <= rect.left) ball.ReboundX();
+		if (ballHitbox.right >= rect.left && ballHitbox.left <= rect.left) ball.ReboundX();
 		else
-			if (ballHitbox.left <= rect.right && ballHitbox.left >= rect.right) ball.ReboundX();
+			if (ballHitbox.left <= rect.right && ballHitbox.right >= rect.right) ball.ReboundX();
 	}
 	
 }
