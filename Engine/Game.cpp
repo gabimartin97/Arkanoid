@@ -25,8 +25,8 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	ball(Vec2(300, 400), Vec2(200, -200)),
-	pad(Vec2(400, 520), 80.0f, 25.0f, Colors::Magenta),
+	ball(Vec2(300.0f, 400.0f), Vec2(200.0f, -200.0f)),
+	pad(Vec2(400.0f, 520.0f), 80.0f, 25.0f, Colors::Magenta),
 	walls(Vec2(0,0),Vec2(int(gfx.ScreenWidth),int(gfx.ScreenHeight)))
 	
 {
@@ -37,7 +37,7 @@ Game::Game(MainWindow& wnd)
 	for (int k = 0; k < nBrickRows; k++) {
 		for (int j = 0; j < nBrickColumns; j++) {
 
-			bricks[i] = Brick(Vec2(offsetX + brickWidth * j, offsetY + brickHeight * k), brickWidth, brickHeight, Colors::Blue);
+			bricks[i] = Brick(Vec2(float(offsetX + brickWidth * j),float( offsetY + brickHeight * k)), float(brickWidth), float(brickHeight), Colors::Blue);
 			i++;
 		}
 	}
@@ -76,6 +76,7 @@ void Game::UpdateModel()
 	ball.DoWallCollision(walls);
 	for (Brick& b : bricks)if (!b.IsDestroyed())b.DoBallCollision(ball);
 	pad.DoWallCollision(walls);
+	pad.DoBallCollision(ball);
 }
 void Game::ComposeFrame()
 {

@@ -41,3 +41,18 @@ void Paddle::DoWallCollision(const RectF & walls)
 		}
 	
 }
+
+void Paddle::DoBallCollision(Ball & ball) const
+{
+	RectF ballHitbox = ball.GetHitbox();
+	if (body.IsOverlappingWith(ballHitbox)) {
+		
+		if (ballHitbox.top <= body.bottom && ballHitbox.bottom >= body.bottom) ball.ReboundY();
+		else
+			if (ballHitbox.bottom >= body.top && ballHitbox.top <= body.top) ball.ReboundY();
+
+		if (ballHitbox.right >= body.left && ballHitbox.left <= body.left) ball.ReboundX();
+		else
+			if (ballHitbox.left <= body.right && ballHitbox.right >= body.right) ball.ReboundX();
+	}
+}
