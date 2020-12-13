@@ -11,7 +11,7 @@ public:
 	void Draw(Graphics& gfx)const;
 	void Update(const float dt, const unsigned char data);
 	void DoWallCollision(const RectF& walls);
-	void DoBallCollision(Ball& ball) const;
+	bool DoBallCollision(Ball& ball) const;
 
 private:
 	

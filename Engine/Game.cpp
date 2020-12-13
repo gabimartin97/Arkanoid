@@ -27,7 +27,9 @@ Game::Game(MainWindow& wnd)
 	gfx(wnd),
 	ball(Vec2(300.0f, 400.0f), Vec2(-200.0f, -200.0f)),
 	pad(Vec2(400.0f, 520.0f), 80.0f, 25.0f, Colors::Magenta),
-	walls(Vec2(0,0),Vec2(int(gfx.ScreenWidth),int(gfx.ScreenHeight)))
+	walls(Vec2(0, 0), Vec2(int(gfx.ScreenWidth), int(gfx.ScreenHeight))),
+	padHitSound(L"Sounds\\arkpad.wav"),
+	brickHitSound(L"Sounds\\arkbrick.wav")
 	
 {
 	int offsetX = 100;
@@ -53,11 +55,8 @@ void Game::Go()
 
 void Game::UpdateModel()
 {	
-	
 	float dt = ft.Mark();
-
-	
-
+	/*---------------------PAD-----------------------------*/
 	if (!wnd.kbd.KeyIsEmpty()) {
 		if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
 			unsigned char data = 'l';
@@ -71,12 +70,20 @@ void Game::UpdateModel()
 			
 		}
 	}
+	pad.DoWallCollision(walls);
+	if (pad.DoBallCollision(ball))padHitSound.Play();
+	/*---------------------PAD-----------------------------*/
 
 	ball.Update(dt);
 	ball.DoWallCollision(walls);
-	for (Brick& b : bricks)if (!b.IsDestroyed())b.DoBallCollision(ball);
-	pad.DoWallCollision(walls);
-	pad.DoBallCollision(ball);
+
+	for (Brick& b : bricks) { 
+		if (!b.IsDestroyed()) { 
+			if (b.DoBallCollision(ball)) brickHitSound.Play();
+		}
+	}
+	
+	
 }
 void Game::ComposeFrame()
 {
