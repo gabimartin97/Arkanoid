@@ -27,21 +27,25 @@ void Ball::DoWallCollision(const RectF & walls)
 	{
 		ReboundX();
 		position_center.x = walls.topLeft.x + radius;
+		hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
 	}
 	else if (position_center.x + radius >= walls.bottomRight.x)
 	{
 		ReboundX();
 		position_center.x = walls.bottomRight.x - radius;
+		hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
 	}
 	if (position_center.y - radius <= walls.topLeft.y)
 	{
 		ReboundY();
 		position_center.y = walls.topLeft.y + radius;
+		hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
 	}
 	else if (position_center.y + radius >= walls.bottomRight.y)
 	{
 		ReboundY();
 		position_center.y = walls.bottomRight.y - radius;
+		hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
 	}
 	
 }
@@ -59,4 +63,9 @@ void Ball::ReboundY()
 RectF Ball::GetHitbox() const
 {
 	return hitbox;
+}
+
+void Ball::BallHitboxDraw(Graphics& gfx) const
+{
+	gfx.DrawRect(hitbox, Colors::Red);
 }

@@ -14,6 +14,7 @@ public:
 	void ReboundX();
 	void ReboundY();
 	RectF GetHitbox()const;
+	void BallHitboxDraw(Graphics& gfx)const;
 
 
 private:
@@ -21,6 +22,6 @@ private:
 	Vec2 velocity;
 	RectF hitbox;
 	
-	static constexpr int radius = 7;
+	static constexpr float radius = 7.0f;
 	
 };
