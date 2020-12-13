@@ -37,4 +37,15 @@ bool Brick::IsDestroyed() const
 	return isDestroyed;
 }
 
+RectF Brick::GetExpanded(const float scalar) const
+{	
+	
+	return RectF(rect.GetExpanded(scalar));
+}
+
+Color Brick::GetColor(void) const
+{
+	return c;
+}
+
 

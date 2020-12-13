@@ -13,6 +13,9 @@ public:
 	void Draw(Graphics& gfx ) const;
 	void DoBallCollision(Ball& ball);
 	bool IsDestroyed() const;
+	RectF GetExpanded(const float scalar) const;
+	Color GetColor(void) const;
+
 	
 
 private:

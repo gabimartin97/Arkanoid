@@ -34,6 +34,13 @@ RectF RectF::FromCenter(const Vec2 & center, const float halfWidth, const float 
 	return RectF(topLeft, bottomRight);
 }
 
+RectF RectF::GetExpanded(const float scalar) const
+{
+	Vec2 scaledTopLeft = Vec2(topLeft.x - scalar, topLeft.y - scalar);
+	Vec2 scaledBottomRight = Vec2(bottomRight.x + scalar, bottomRight.y + scalar);
+	return RectF(scaledTopLeft,scaledBottomRight);
+}
+
 
 bool RectF::IsOverlappingWith(const RectF & rect_in) const
 {

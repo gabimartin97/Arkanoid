@@ -33,11 +33,11 @@ Game::Game(MainWindow& wnd)
 	int offsetX = 100;
 	int offsetY = 100;
 	int i = 0;
-
+	Color brickColors[3] = { Colors::Red, Colors::Green, Colors::Blue };
 	for (int k = 0; k < nBrickRows; k++) {
 		for (int j = 0; j < nBrickColumns; j++) {
 
-			bricks[i] = Brick(Vec2(float(offsetX + brickWidth * j),float( offsetY + brickHeight * k)), float(brickWidth), float(brickHeight), Colors::Blue);
+			bricks[i] = Brick(Vec2(float(offsetX + brickWidth * j),float( offsetY + brickHeight * k)), float(brickWidth), float(brickHeight), brickColors[k]);
 			i++;
 		}
 	}
@@ -82,7 +82,9 @@ void Game::ComposeFrame()
 {
 	for (const Brick& b : bricks)
 	{
-		if (!b.IsDestroyed())b.Draw(gfx);
+		if (!b.IsDestroyed()) {
+			gfx.DrawRect(b.GetExpanded(-2), b.GetColor());
+		}
 	}
 	pad.Draw(gfx);
 	//ball.BallHitboxDraw(gfx);
