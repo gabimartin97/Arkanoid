@@ -25,7 +25,7 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	ball(Vec2(300.0f, 400.0f), Vec2(-200.0f, -200.0f)),
+	ball(Vec2(300.0f, 400.0f), Vec2(-272.0f, -301.0f)),
 	pad(Vec2(400.0f, 520.0f), 80.0f, 25.0f, Colors::Magenta),
 	walls(Vec2(0, 0), Vec2(int(gfx.ScreenWidth), int(gfx.ScreenHeight))),
 	padHitSound(L"Sounds\\arkpad.wav"),
@@ -77,11 +77,38 @@ void Game::UpdateModel()
 	ball.Update(dt);
 	ball.DoWallCollision(walls);
 
-	for (Brick& b : bricks) { 
-		if (!b.IsDestroyed()) { 
-			if (b.DoBallCollision(ball)) brickHitSound.Play();
+	{
+		bool colisionHappened = false;
+		int closestBrick = 0;
+		float closestBrickDistanceSq = 0.0f;
+		
+
+		for (int i = 0; i < nBricks; i++) {
+			if (bricks[i].CheckCollision(ball)) {
+				if (!colisionHappened) {
+					colisionHappened = true;
+					closestBrick = i;
+					closestBrickDistanceSq = (bricks[i].ReturnCenter() - ball.ReturnCenter()).GetLengthSq();
+				}
+				else {
+					float newBrickDistanceSq = (bricks[i].ReturnCenter() - ball.ReturnCenter()).GetLengthSq();
+
+					if (newBrickDistanceSq < closestBrickDistanceSq) {
+						closestBrickDistanceSq = newBrickDistanceSq;
+						closestBrick = i;
+
+					}
+
+				}
+						
+
+					
+			}
+
 		}
+		if(colisionHappened)bricks[closestBrick].ExecuteCollision(ball);
 	}
+	
 	
 	
 }
@@ -90,11 +117,11 @@ void Game::ComposeFrame()
 	for (const Brick& b : bricks)
 	{
 		if (!b.IsDestroyed()) {
-			gfx.DrawRect(b.GetExpanded(-2), b.GetColor());
+			gfx.DrawRect(b.GetExpanded(-1), b.GetColor());
 		}
 	}
 	pad.Draw(gfx);
-	//ball.BallHitboxDraw(gfx);
+	ball.BallHitboxDraw(gfx);
 	ball.Draw(gfx);
 	
 }

@@ -69,3 +69,8 @@ void Ball::BallHitboxDraw(Graphics& gfx) const
 {
 	gfx.DrawRect(hitbox, Colors::Red);
 }
+
+Vec2 Ball::ReturnCenter() const
+{
+	return position_center;
+}

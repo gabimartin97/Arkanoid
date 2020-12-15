@@ -47,11 +47,11 @@ private:
 	
 	/********************************/
 	/*  User Variables              */
-	static constexpr int nBricks = 18;
-	static constexpr int nBrickColumns = 6;
+	static constexpr int nBricks = 45;
+	static constexpr int nBrickColumns = 15;
 	static constexpr int nBrickRows = 3;
-	static constexpr int brickWidth = 80;
-	static constexpr int brickHeight = 40;
+	static constexpr int brickWidth = 40;
+	static constexpr int brickHeight = 20;
 	Brick bricks[nBricks];
 	Ball ball;
 	FrameTimer ft;
@@ -59,6 +59,7 @@ private:
 	Paddle pad;
 	Sound padHitSound;
 	Sound brickHitSound;
+	
 	
 	/********************************/
 };

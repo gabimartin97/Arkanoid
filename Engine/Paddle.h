@@ -19,7 +19,7 @@ private:
 	Color c;
 	 float padWidth;
 	 float padHeight;
-	static constexpr float lateralSpeed = 200;
+	static constexpr float lateralSpeed = 400;
 
 
 

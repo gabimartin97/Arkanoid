@@ -12,10 +12,12 @@ public:
 
 	void Draw(Graphics& gfx ) const;
 	bool DoBallCollision(Ball& ball);
+	bool CheckCollision(const Ball& ball) const;
+	void ExecuteCollision(Ball& ball);
 	bool IsDestroyed() const;
 	RectF GetExpanded(const float scalar) const;
 	Color GetColor(void) const;
-
+	Vec2 ReturnCenter() const;
 	
 
 private:
