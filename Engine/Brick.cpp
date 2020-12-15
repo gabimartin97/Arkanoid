@@ -51,49 +51,75 @@ bool Brick::CheckCollision(const Ball & ball) const
 
 void Brick::ExecuteCollision(Ball & ball)
 {
-	assert(!isDestroyed);
+	assert(CheckCollision(ball));
 	
 		bool verticalSuperiorCollision = false;
 		bool verticalInferiorCollision = false;
 		bool horizontalLeftCollision = false;
 		bool horizontalRightCollision = false;
 		bool betweenX = false;
-		bool insideY = false;
-		bool Bug = false;
-		RectF ballHitbox = ball.GetHitbox();
+		bool betweenY = false;
 		Vec2 ballCenter = ball.ReturnCenter();
 
-		bool betweenX = ballCenter.x >= rect.left && ballCenter.x <= rect.right;
-		bool betweenY = ballCenter.y >= rect.top && ballCenter.y <= rect.bottom;
-		
-		if ((ballCenter.y < rect.top && ballCenter.y < rect.bottom) && betweenX ) {
+		 betweenX = ballCenter.x >= rect.left && ballCenter.x <= rect.right;
+		 betweenY = ballCenter.y >= rect.top && ballCenter.y <= rect.bottom;
+		/* ----------------------- COLISIONES BÁSICAS ------------------------*/
+		if ((ballCenter.y < rect.top && ballCenter.y < rect.bottom) && betweenX ) 
+		{
 			verticalSuperiorCollision = true;
 		} else 
-			if ((ballCenter.y > rect.top && ballCenter.y > rect.bottom) && betweenX ) {
+			if ((ballCenter.y > rect.top && ballCenter.y > rect.bottom) && betweenX ) 
+			{
 				verticalInferiorCollision = true;
 			}
 
-		if ((ballCenter.x < rect.left && ballCenter.x < rect.right) && betweenY) {
+		if ((ballCenter.x < rect.left && ballCenter.x < rect.right) && betweenY) 
+		{
 			horizontalLeftCollision = true;
-		}else
-			if ((ballCenter.x > rect.left && ballCenter.x > rect.right) && betweenY ) {
+		}
+		else
+			if ((ballCenter.x > rect.left && ballCenter.x > rect.right) && betweenY ) 
+			{
 				horizontalRightCollision = true;
 			}
 
 		if (verticalInferiorCollision || verticalSuperiorCollision) {
 			ball.ReboundY();
 			isDestroyed = true;
-		}
+		} 
+		else
 		if (horizontalLeftCollision || horizontalRightCollision) {
 			ball.ReboundX();
 			isDestroyed = true;
 		}
-		if ((verticalInferiorCollision || verticalSuperiorCollision) && (horizontalLeftCollision || horizontalLeftCollision) ) {
-			Bug = true;
+		else
+			/* ----------------------- COLISIONES ESQUINERAS ------------------------*/
+		{
+			Vec2 brickBallVector = ball.ReturnCenter() - ReturnCenter();
+			if (std::signbit(ball.ReturnVelocity().x) == std::signbit(brickBallVector.x))
+			{
+				ball.ReboundY();
+				isDestroyed = true;
+			}
+			else
+			{
+				ball.ReboundX();
+				isDestroyed = true;
+			}
+			
+			
+
+
+
+			/*if ((verticalInferiorCollision || verticalSuperiorCollision) && (horizontalLeftCollision || horizontalLeftCollision))
+			{
+				ball.ReboundX();
+				ball.ReboundY();
+				isDestroyed = true;
+			}*/
+			
 			
 		}
-	
-
 }
 
 bool Brick::IsDestroyed() const

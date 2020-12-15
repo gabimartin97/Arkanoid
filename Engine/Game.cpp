@@ -79,34 +79,40 @@ void Game::UpdateModel()
 
 	{
 		bool colisionHappened = false;
-		int closestBrick = 0;
+		int closestBrickIndex = 0;
 		float closestBrickDistanceSq = 0.0f;
 		
 
-		for (int i = 0; i < nBricks; i++) {
-			if (bricks[i].CheckCollision(ball)) {
-				if (!colisionHappened) {
+		for (int i = 0; i < nBricks; i++) 
+		{
+			if (bricks[i].CheckCollision(ball))
+			{
+				if (!colisionHappened)
+				{
 					colisionHappened = true;
-					closestBrick = i;
+					closestBrickIndex = i;
 					closestBrickDistanceSq = (bricks[i].ReturnCenter() - ball.ReturnCenter()).GetLengthSq();
 				}
-				else {
-					float newBrickDistanceSq = (bricks[i].ReturnCenter() - ball.ReturnCenter()).GetLengthSq();
+				else 
+				{
+					const float newBrickDistanceSq = (bricks[i].ReturnCenter() - ball.ReturnCenter()).GetLengthSq();
 
-					if (newBrickDistanceSq < closestBrickDistanceSq) {
+					if (newBrickDistanceSq < closestBrickDistanceSq) 
+					{
 						closestBrickDistanceSq = newBrickDistanceSq;
-						closestBrick = i;
+						closestBrickIndex = i;
 
 					}
 
 				}
-						
-
-					
 			}
 
 		}
-		if(colisionHappened)bricks[closestBrick].ExecuteCollision(ball);
+		if (colisionHappened)
+		{
+			bricks[closestBrickIndex].ExecuteCollision(ball);
+			brickHitSound.Play();
+		}
 	}
 	
 	

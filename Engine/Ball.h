@@ -16,6 +16,7 @@ public:
 	RectF GetHitbox()const;
 	void BallHitboxDraw(Graphics& gfx)const;
 	Vec2 ReturnCenter() const;
+	Vec2 ReturnVelocity() const;
 
 
 private:

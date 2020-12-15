@@ -74,3 +74,8 @@ Vec2 Ball::ReturnCenter() const
 {
 	return position_center;
 }
+
+Vec2 Ball::ReturnVelocity() const
+{
+	return velocity;
+}
