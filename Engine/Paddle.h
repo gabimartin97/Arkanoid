@@ -11,7 +11,9 @@ public:
 	void Draw(Graphics& gfx)const;
 	void Update(const float dt, const unsigned char data);
 	void DoWallCollision(const RectF& walls);
-	bool DoBallCollision(Ball& ball) const;
+	bool DoBallCollision(Ball& ball);
+	Vec2 ReturnCenter() const;
+	void DeactivateCooldown();
 
 private:
 	
@@ -20,6 +22,7 @@ private:
 	 float padWidth;
 	 float padHeight;
 	static constexpr float lateralSpeed = 400;
+	bool isCooldown = false;
 
 
 

@@ -48,14 +48,23 @@ Game::Game(MainWindow& wnd)
 void Game::Go()
 {
 	gfx.BeginFrame();	
-	UpdateModel();
+	float elapsedTime = ft.Mark();//equal to the amount of time it takes to render 1 frame. In 60hz monitor dt=16ms
+	while (elapsedTime > 0.0f)
+	{	
+		const float SimulationTimeStep = 0.0025f;
+		const float dt = std::min(elapsedTime, SimulationTimeStep);
+		UpdateModel(dt);
+		elapsedTime = elapsedTime - dt;
+	}
 	ComposeFrame();
 	gfx.EndFrame();
 }
 
-void Game::UpdateModel()
+void Game::UpdateModel(const float dt)
 {	
-	float dt = ft.Mark();
+	//float dt = ft.Mark(); //equal to the amount of time it takes to render 1 frame. In 60hz monitor dt=16ms
+	ball.Update(dt);
+	if (ball.DoWallCollision(walls)) pad.DeactivateCooldown();
 	/*---------------------PAD-----------------------------*/
 	if (!wnd.kbd.KeyIsEmpty()) {
 		if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
@@ -74,8 +83,7 @@ void Game::UpdateModel()
 	if (pad.DoBallCollision(ball))padHitSound.Play();
 	/*---------------------PAD-----------------------------*/
 
-	ball.Update(dt);
-	ball.DoWallCollision(walls);
+	
 
 	{
 		bool colisionHappened = false;
@@ -112,6 +120,7 @@ void Game::UpdateModel()
 		{
 			bricks[closestBrickIndex].ExecuteCollision(ball);
 			brickHitSound.Play();
+			pad.DeactivateCooldown();
 		}
 	}
 	

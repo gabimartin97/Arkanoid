@@ -37,7 +37,7 @@ public:
 	void Go();
 private:
 	void ComposeFrame();
-	void UpdateModel();
+	void UpdateModel(const float dt);
 	/********************************/
 	/*  User Functions              */
 	/********************************/

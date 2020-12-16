@@ -107,18 +107,7 @@ void Brick::ExecuteCollision(Ball & ball)
 				isDestroyed = true;
 			}
 			
-			
-
-
-
-			/*if ((verticalInferiorCollision || verticalSuperiorCollision) && (horizontalLeftCollision || horizontalLeftCollision))
-			{
-				ball.ReboundX();
-				ball.ReboundY();
-				isDestroyed = true;
-			}*/
-			
-			
+						
 		}
 }
 

@@ -10,7 +10,7 @@ public:
 	Ball(const Vec2& center, const Vec2& velocity_in);
 	void Draw(Graphics& gfx)const;
 	void Update(const float dt);
-	void DoWallCollision(const RectF& walls);
+	bool DoWallCollision(const RectF& walls);
 	void ReboundX();
 	void ReboundY();
 	RectF GetHitbox()const;

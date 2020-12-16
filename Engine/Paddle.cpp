@@ -42,19 +42,90 @@ void Paddle::DoWallCollision(const RectF & walls)
 	
 }
 
-bool Paddle::DoBallCollision(Ball & ball) const
+bool Paddle::DoBallCollision(Ball & ball) 
 {
-	RectF ballHitbox = ball.GetHitbox();
-	if (body.IsOverlappingWith(ballHitbox)) {
-		
-		if (ballHitbox.top <= body.bottom && ballHitbox.bottom >= body.bottom) ball.ReboundY();
-		else
-			if (ballHitbox.bottom >= body.top && ballHitbox.top <= body.top) ball.ReboundY();
+	
 
-		if (ballHitbox.right >= body.left && ballHitbox.left <= body.left) ball.ReboundX();
-		else
-			if (ballHitbox.left <= body.right && ballHitbox.right >= body.right) ball.ReboundX();
-		return true;
-	}
-	return false;
+		RectF ballHitbox = ball.GetHitbox();
+		if (body.IsOverlappingWith(ballHitbox))
+		{
+			if (!isCooldown)
+			{
+
+				bool verticalSuperiorCollision = false;
+				bool verticalInferiorCollision = false;
+				bool horizontalLeftCollision = false;
+				bool horizontalRightCollision = false;
+				bool betweenX = false;
+				bool betweenY = false;
+				Vec2 ballCenter = ball.ReturnCenter();
+
+				betweenX = ballCenter.x >= body.left && ballCenter.x <= body.right;
+				betweenY = ballCenter.y >= body.top && ballCenter.y <= body.bottom;
+				/* ----------------------- COLISIONES BÁSICAS ------------------------*/
+				if ((ballCenter.y < body.top && ballCenter.y < body.bottom) && betweenX)
+				{
+					verticalSuperiorCollision = true;
+				}
+				else
+					if ((ballCenter.y > body.top && ballCenter.y > body.bottom) && betweenX)
+					{
+						verticalInferiorCollision = true;
+					}
+
+				if ((ballCenter.x < body.left && ballCenter.x < body.right) && betweenY)
+				{
+					horizontalLeftCollision = true;
+				}
+				else
+					if ((ballCenter.x > body.left && ballCenter.x > body.right) && betweenY)
+					{
+						horizontalRightCollision = true;
+					}
+
+				if (verticalInferiorCollision || verticalSuperiorCollision) {
+					ball.ReboundY();
+
+				}
+				else
+					if (horizontalLeftCollision || horizontalRightCollision) {
+						ball.ReboundX();
+
+					}
+					else
+						/* ----------------------- COLISIONES ESQUINERAS ------------------------*/
+					{
+						Vec2 brickBallVector = ball.ReturnCenter() - ReturnCenter();
+						if (std::signbit(ball.ReturnVelocity().x) == std::signbit(brickBallVector.x))
+						{
+							ball.ReboundY();
+
+						}
+						else
+						{
+							ball.ReboundX();
+
+						}
+
+
+					}
+				isCooldown = true;
+				return true;
+			}
+			
+		}
+		return false;
+}
+
+Vec2 Paddle::ReturnCenter() const
+{
+	float centerX = body.topLeft.x + ((body.right - body.left) / 2.0f);
+	float centerY = body.topLeft.y + ((body.bottom - body.top) / 2.0f);
+	return Vec2(centerX, centerY);
+	
+}
+
+void Paddle::DeactivateCooldown()
+{
+	isCooldown = false;
 }

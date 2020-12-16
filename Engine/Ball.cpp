@@ -21,31 +21,39 @@ void Ball::Update(const float dt)
 	
 }
 
-void Ball::DoWallCollision(const RectF & walls)
+bool Ball::DoWallCollision(const RectF & walls)
 {
 	if (position_center.x - radius <= walls.topLeft.x)
 	{
 		ReboundX();
 		position_center.x = walls.topLeft.x + radius;
 		hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
+		return true;
 	}
 	else if (position_center.x + radius >= walls.bottomRight.x)
 	{
 		ReboundX();
 		position_center.x = walls.bottomRight.x - radius;
 		hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
+		return true;
 	}
-	if (position_center.y - radius <= walls.topLeft.y)
+	else if (position_center.y - radius <= walls.topLeft.y)
 	{
 		ReboundY();
 		position_center.y = walls.topLeft.y + radius;
 		hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
+		return true;
 	}
 	else if (position_center.y + radius >= walls.bottomRight.y)
 	{
 		ReboundY();
 		position_center.y = walls.bottomRight.y - radius;
 		hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 	
 }
