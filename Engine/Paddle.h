@@ -14,6 +14,7 @@ public:
 	bool DoBallCollision(Ball& ball);
 	Vec2 ReturnCenter() const;
 	void DeactivateCooldown();
+	bool DoVectorialBallCollision(Ball& ball);
 
 private:
 	

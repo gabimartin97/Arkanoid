@@ -80,7 +80,7 @@ void Game::UpdateModel(const float dt)
 		}
 	}
 	pad.DoWallCollision(walls);
-	if (pad.DoBallCollision(ball))padHitSound.Play();
+	if (pad.DoVectorialBallCollision(ball))padHitSound.Play();
 	/*---------------------PAD-----------------------------*/
 
 	

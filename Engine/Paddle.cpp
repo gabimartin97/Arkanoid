@@ -129,3 +129,23 @@ void Paddle::DeactivateCooldown()
 {
 	isCooldown = false;
 }
+
+bool Paddle::DoVectorialBallCollision(Ball & ball)
+{
+	RectF ballHitbox = ball.GetHitbox();
+	if (body.IsOverlappingWith(ballHitbox))
+	{
+		if (!isCooldown)
+		{
+			Vec2 padBallVector = ball.ReturnCenter() - ReturnCenter();
+			
+				Vec2 ballVelocityScalar(padBallVector.GetNormalized());
+				ball.ScaleVelocityVector(ballVelocityScalar);
+			
+			isCooldown = true;
+			return true;
+		}
+		return false;
+	}
+	return false;
+}

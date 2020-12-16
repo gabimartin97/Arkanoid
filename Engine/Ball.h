@@ -17,12 +17,13 @@ public:
 	void BallHitboxDraw(Graphics& gfx)const;
 	Vec2 ReturnCenter() const;
 	Vec2 ReturnVelocity() const;
-
+	void ScaleVelocityVector(const Vec2& velocity_in);
 
 private:
 	Vec2 position_center;
 	Vec2 velocity;
 	RectF hitbox;
+	float speed = 500;
 	
 	static constexpr float radius = 7.0f;
 	

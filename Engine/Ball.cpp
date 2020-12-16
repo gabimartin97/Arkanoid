@@ -87,3 +87,8 @@ Vec2 Ball::ReturnVelocity() const
 {
 	return velocity;
 }
+
+void Ball::ScaleVelocityVector(const Vec2 & velocity_in)
+{
+	velocity = Vec2((velocity_in.x * speed), (velocity_in.y * speed));
+}
