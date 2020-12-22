@@ -18,7 +18,8 @@ public:
 	Vec2 ReturnCenter() const;
 	Vec2 ReturnVelocity() const;
 	void ScaleVelocityVector(const Vec2& velocity_in);
-
+	void Move(const Vec2& center_in); 
+	float ReturnRadius() const;
 private:
 	Vec2 position_center;
 	Vec2 velocity;

@@ -59,7 +59,8 @@ private:
 	Paddle pad;
 	Sound padHitSound;
 	Sound brickHitSound;
-	
+	bool ballReleased = false;
+	bool isGameOver = false;
 	
 	/********************************/
 };

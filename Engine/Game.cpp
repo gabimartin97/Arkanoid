@@ -25,7 +25,7 @@ Game::Game(MainWindow& wnd)
 	:
 	wnd(wnd),
 	gfx(wnd),
-	ball(Vec2(300.0f, 400.0f), Vec2(-272.0f, -301.0f)),
+	ball(Vec2(300.0f, 400.0f), Vec2(0.0f, 0.0f)),
 	pad(Vec2(400.0f, 520.0f), 80.0f, 25.0f, Colors::Magenta),
 	walls(Vec2(0, 0), Vec2(int(gfx.ScreenWidth), int(gfx.ScreenHeight))),
 	padHitSound(L"Sounds\\arkpad.wav"),
@@ -62,6 +62,16 @@ void Game::Go()
 
 void Game::UpdateModel(const float dt)
 {	
+	if(!isGameOver)
+	{
+	if (!ballReleased)
+	{
+		Vec2 ballStartingPosition = Vec2(pad.ReturnCenter().x, (pad.ReturnCenter().y - (pad.ReturnHeight()) / 2 - ball.ReturnRadius()));
+		ball.Move(ballStartingPosition);
+
+	}
+
+
 	//float dt = ft.Mark(); //equal to the amount of time it takes to render 1 frame. In 60hz monitor dt=16ms
 	ball.Update(dt);
 	if (ball.DoWallCollision(walls)) pad.DeactivateCooldown();
@@ -69,29 +79,38 @@ void Game::UpdateModel(const float dt)
 	if (!wnd.kbd.KeyIsEmpty()) {
 		if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
 			unsigned char data = 'l';
-			pad.Update(dt, data );
-			
+			pad.Update(dt, data);
+
 		}
 		else if (wnd.kbd.KeyIsPressed(VK_RIGHT)) {
 
 			unsigned char data = 'r';
 			pad.Update(dt, data);
-			
+
+		}
+		if (wnd.kbd.KeyIsPressed(VK_SPACE) && !ballReleased)
+		{
+			ballReleased = true;
+			ball.ScaleVelocityVector(Vec2(0,-1));
 		}
 	}
 	pad.DoWallCollision(walls);
+
+	if (ballReleased)
+	{
 	if (pad.DoVectorialBallCollision(ball))padHitSound.Play();
+	}
 	/*---------------------PAD-----------------------------*/
 
-	
+
 
 	{
 		bool colisionHappened = false;
 		int closestBrickIndex = 0;
 		float closestBrickDistanceSq = 0.0f;
-		
 
-		for (int i = 0; i < nBricks; i++) 
+
+		for (int i = 0; i < nBricks; i++)
 		{
 			if (bricks[i].CheckCollision(ball))
 			{
@@ -101,11 +120,11 @@ void Game::UpdateModel(const float dt)
 					closestBrickIndex = i;
 					closestBrickDistanceSq = (bricks[i].ReturnCenter() - ball.ReturnCenter()).GetLengthSq();
 				}
-				else 
+				else
 				{
 					const float newBrickDistanceSq = (bricks[i].ReturnCenter() - ball.ReturnCenter()).GetLengthSq();
 
-					if (newBrickDistanceSq < closestBrickDistanceSq) 
+					if (newBrickDistanceSq < closestBrickDistanceSq)
 					{
 						closestBrickDistanceSq = newBrickDistanceSq;
 						closestBrickIndex = i;
@@ -123,7 +142,8 @@ void Game::UpdateModel(const float dt)
 			pad.DeactivateCooldown();
 		}
 	}
-	
+
+	} 
 	
 	
 }
@@ -136,7 +156,7 @@ void Game::ComposeFrame()
 		}
 	}
 	pad.Draw(gfx);
-	ball.BallHitboxDraw(gfx);
+	//ball.BallHitboxDraw(gfx);
 	ball.Draw(gfx);
 	
 }

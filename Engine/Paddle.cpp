@@ -149,3 +149,8 @@ bool Paddle::DoVectorialBallCollision(Ball & ball)
 	}
 	return false;
 }
+
+float Paddle::ReturnHeight() const
+{
+	return padHeight;
+}

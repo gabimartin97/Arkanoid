@@ -15,6 +15,7 @@ public:
 	Vec2 ReturnCenter() const;
 	void DeactivateCooldown();
 	bool DoVectorialBallCollision(Ball& ball);
+	float ReturnHeight()const;
 
 private:
 	

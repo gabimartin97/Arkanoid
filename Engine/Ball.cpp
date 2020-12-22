@@ -49,6 +49,7 @@ bool Ball::DoWallCollision(const RectF & walls)
 		ReboundY();
 		position_center.y = walls.bottomRight.y - radius;
 		hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
+
 		return true;
 	}
 	else
@@ -91,4 +92,16 @@ Vec2 Ball::ReturnVelocity() const
 void Ball::ScaleVelocityVector(const Vec2 & velocity_in)
 {
 	velocity = Vec2((velocity_in.x * speed), (velocity_in.y * speed));
+}
+
+void Ball::Move(const Vec2 & center_in)
+{
+	position_center = center_in;
+	hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
+
+}
+
+float Ball::ReturnRadius() const
+{
+	return radius;
 }
