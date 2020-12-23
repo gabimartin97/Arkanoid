@@ -195,6 +195,7 @@ void Game::RestartGame()
 	ball = Ball(Vec2(300.0f, 400.0f), Vec2(0.0f, 0.0f));
 	pad = Paddle(Vec2(400.0f, 520.0f), 80.0f, 25.0f, Colors::Magenta);
 	ball.SetSpeed(500);
+	bricksLeft = nBricks;
 	isGameOver = false;
 	ballReleased = false;
 	levelCompleted = false;
