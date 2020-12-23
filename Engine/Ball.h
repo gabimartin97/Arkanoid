@@ -2,6 +2,7 @@
 #include "RectF.h"
 #include "Graphics.h"
 #include "SpriteCodex.h"
+#include "Wall.h"
 
 
 class Ball
@@ -10,7 +11,7 @@ public:
 	Ball(const Vec2& center, const Vec2& velocity_in);
 	void Draw(Graphics& gfx)const;
 	void Update(const float dt);
-	bool DoWallCollision(const RectF& walls, bool* isGameOver);
+	bool DoWallCollision(const Wall& walls, bool* isGameOver);
 	void ReboundX();
 	void ReboundY();
 	RectF GetHitbox()const;

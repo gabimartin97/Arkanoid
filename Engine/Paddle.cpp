@@ -29,15 +29,15 @@ void Paddle::Update(const float dt, const unsigned char data)
 
 }
 
-void Paddle::DoWallCollision(const RectF & walls)
+void Paddle::DoWallCollision(const Wall & walls)
 {
-	if (body.left < walls.topLeft.x)
+	if (body.left < walls.borders.topLeft.x)
 	{
-		body.Update(Vec2(walls.topLeft.x, body.top),Vec2(walls.topLeft.x + padWidth, body.bottom));
+		body.Update(Vec2(walls.borders.topLeft.x, body.top),Vec2(walls.borders.topLeft.x + padWidth, body.bottom));
 	}
 	else
-		if (body.right > walls.bottomRight.x) {
-			body.Update(Vec2(walls.bottomRight.x - padWidth, body.top), Vec2(walls.bottomRight.x, body.bottom));
+		if (body.right > walls.borders.bottomRight.x) {
+			body.Update(Vec2(walls.borders.bottomRight.x - padWidth, body.top), Vec2(walls.borders.bottomRight.x, body.bottom));
 		}
 	
 }

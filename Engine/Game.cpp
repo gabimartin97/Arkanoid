@@ -27,7 +27,7 @@ Game::Game(MainWindow& wnd)
 	gfx(wnd),
 	ball(Vec2(300.0f, 400.0f), Vec2(0.0f, 0.0f)),
 	pad(Vec2(400.0f, 520.0f), 80.0f, 25.0f, Colors::Magenta),
-	walls(Vec2(0, 0), Vec2(int(gfx.ScreenWidth), int(gfx.ScreenHeight))),
+	walls(screenCenter),
 	padHitSound(L"Sounds\\arkpad.wav"),
 	brickHitSound(L"Sounds\\arkbrick.wav")
 	
@@ -159,6 +159,7 @@ void Game::UpdateModel(const float dt)
 
 void Game::ComposeFrame()
 {
+	walls.Draw(gfx);
 	for (const Brick& b : bricks)
 	{
 		if (!b.IsDestroyed()) {

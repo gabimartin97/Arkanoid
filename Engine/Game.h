@@ -28,6 +28,7 @@
 #include "FrameTimer.h"
 #include "Paddle.h"
 #include "Sound.h"
+#include "Wall.h"
 class Game
 {
 public:
@@ -53,10 +54,11 @@ private:
 	static constexpr int nBrickRows = 3;
 	static constexpr int brickWidth = 40;
 	static constexpr int brickHeight = 20;
+	Vec2 screenCenter = Vec2(int(gfx.ScreenWidth / 2), int(gfx.ScreenHeight) / 2);
 	Brick bricks[nBricks];
 	Ball ball;
 	FrameTimer ft;
-	RectF walls;
+	Wall walls;
 	Paddle pad;
 	Sound padHitSound;
 	Sound brickHitSound;

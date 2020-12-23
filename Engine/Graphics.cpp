@@ -342,6 +342,33 @@ void Graphics::DrawRect(const RectF rect_in, const Color c_in)
 	DrawRect(rect_in.topLeft.x, rect_in.topLeft.y, rect_in.bottomRight.x, rect_in.bottomRight.y, c_in);
 }
 
+void Graphics::DrawRectContour(const RectF rect_in, const int thickness, Color c_in)
+{
+	 int x0 = rect_in.topLeft.x;
+	 int y0 = rect_in.topLeft.y;
+	 int x1 = rect_in.bottomRight.x;
+	 int y1 = rect_in.bottomRight.y;
+	if (x0 > x1)
+	{
+		std::swap(x0, x1);
+	}
+	if (y0 > y1)
+	{
+		std::swap(y0, y1);
+	}
+
+	for (int y = y0; y < y1; ++y)
+	{
+		for (int x = x0; x < x1; ++x)
+		{
+			if ((x - x0 <= ( thickness) || x1 - x <= thickness) || (y - y0 <= (thickness ) || y1 - y <= thickness))
+			{
+				PutPixel(x, y, c_in);
+			}
+		}
+	}
+}
+
 void Graphics::DrawCircle( int x,int y,int radius,Color c )
 {
 	const int rad_sq = radius * radius;

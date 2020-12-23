@@ -21,33 +21,33 @@ void Ball::Update(const float dt)
 	
 }
 
-bool Ball::DoWallCollision(const RectF & walls, bool* isGameOver)
+bool Ball::DoWallCollision(const Wall & walls, bool* isGameOver)
 {
-	if (position_center.x - radius <= walls.topLeft.x)
+	if (position_center.x - radius <= walls.borders.topLeft.x)
 	{
 		ReboundX();
-		position_center.x = walls.topLeft.x + radius;
+		position_center.x = walls.borders.topLeft.x + radius;
 		hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
 		return true;
 	}
-	else if (position_center.x + radius >= walls.bottomRight.x)
+	else if (position_center.x + radius >= walls.borders.bottomRight.x)
 	{
 		ReboundX();
-		position_center.x = walls.bottomRight.x - radius;
+		position_center.x = walls.borders.bottomRight.x - radius;
 		hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
 		return true;
 	}
-	else if (position_center.y - radius <= walls.topLeft.y)
+	else if (position_center.y - radius <= walls.borders.topLeft.y)
 	{
 		ReboundY();
-		position_center.y = walls.topLeft.y + radius;
+		position_center.y = walls.borders.topLeft.y + radius;
 		hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
 		return true;
 	}
-	else if (position_center.y + radius >= walls.bottomRight.y)
+	else if (position_center.y + radius >= walls.borders.bottomRight.y)
 	{
 		ReboundY();
-		position_center.y = walls.bottomRight.y - radius;
+		position_center.y = walls.borders.bottomRight.y - radius;
 		hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
 		*isGameOver = true;
 
