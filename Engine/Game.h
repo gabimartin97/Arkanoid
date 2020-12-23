@@ -41,6 +41,7 @@ private:
 	/********************************/
 	/*  User Functions              */
 	/********************************/
+	void RestartGame();
 private:
 	MainWindow& wnd;
 	Graphics gfx;

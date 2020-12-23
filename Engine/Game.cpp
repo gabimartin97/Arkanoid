@@ -74,7 +74,7 @@ void Game::UpdateModel(const float dt)
 
 	//float dt = ft.Mark(); //equal to the amount of time it takes to render 1 frame. In 60hz monitor dt=16ms
 	ball.Update(dt);
-	if (ball.DoWallCollision(walls)) pad.DeactivateCooldown();
+	if (ball.DoWallCollision(walls, &isGameOver)) pad.DeactivateCooldown();
 	/*---------------------PAD-----------------------------*/
 	if (!wnd.kbd.KeyIsEmpty()) {
 		if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
@@ -144,9 +144,19 @@ void Game::UpdateModel(const float dt)
 	}
 
 	} 
-	
+	else
+	{
+		if (!wnd.kbd.KeyIsEmpty())
+		{
+			if (wnd.kbd.KeyIsPressed(VK_RETURN))
+			{
+				RestartGame();
+			}
+		}
+	}
 	
 }
+
 void Game::ComposeFrame()
 {
 	for (const Brick& b : bricks)
@@ -158,5 +168,27 @@ void Game::ComposeFrame()
 	pad.Draw(gfx);
 	//ball.BallHitboxDraw(gfx);
 	ball.Draw(gfx);
+	if (isGameOver)SpriteCodex::DrawGameOver(Vec2(400.0f,300.0f),gfx);
 	
+}
+
+void Game::RestartGame()
+{
+
+	int offsetX = 100;
+	int offsetY = 100;
+	int i = 0;
+	Color brickColors[3] = { Colors::Red, Colors::Green, Colors::Blue };
+	for (int k = 0; k < nBrickRows; k++)
+	{
+		for (int j = 0; j < nBrickColumns; j++) {
+
+			bricks[i] = Brick(Vec2(float(offsetX + brickWidth * j), float(offsetY + brickHeight * k)), float(brickWidth), float(brickHeight), brickColors[k]);
+			i++;
+		}
+	}
+	ball = Ball(Vec2(300.0f, 400.0f), Vec2(0.0f, 0.0f));
+	pad = Paddle(Vec2(400.0f, 520.0f), 80.0f, 25.0f, Colors::Magenta);
+	isGameOver = false;
+	ballReleased = false;
 }

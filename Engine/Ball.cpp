@@ -21,7 +21,7 @@ void Ball::Update(const float dt)
 	
 }
 
-bool Ball::DoWallCollision(const RectF & walls)
+bool Ball::DoWallCollision(const RectF & walls, bool* isGameOver)
 {
 	if (position_center.x - radius <= walls.topLeft.x)
 	{
@@ -49,6 +49,7 @@ bool Ball::DoWallCollision(const RectF & walls)
 		ReboundY();
 		position_center.y = walls.bottomRight.y - radius;
 		hitbox.Update(Vec2(position_center.x - radius, position_center.y - radius), Vec2(position_center.x + radius, position_center.y + radius));
+		*isGameOver = true;
 
 		return true;
 	}
