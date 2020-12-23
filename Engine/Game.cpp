@@ -29,7 +29,8 @@ Game::Game(MainWindow& wnd)
 	pad(Vec2(400.0f, 520.0f), 80.0f, 25.0f, Colors::Magenta),
 	walls(screenCenter),
 	padHitSound(L"Sounds\\arkpad.wav"),
-	brickHitSound(L"Sounds\\arkbrick.wav")
+	brickHitSound(L"Sounds\\arkbrick.wav"),
+	bricksLeft(nBricks)
 	
 {
 	int offsetX = 100;
@@ -62,7 +63,7 @@ void Game::Go()
 
 void Game::UpdateModel(const float dt)
 {	
-	if(!isGameOver)
+	if(!isGameOver && !levelCompleted)
 	{
 	if (!ballReleased)
 	{
@@ -140,6 +141,9 @@ void Game::UpdateModel(const float dt)
 			bricks[closestBrickIndex].ExecuteCollision(ball);
 			brickHitSound.Play();
 			pad.DeactivateCooldown();
+			ball.IncreaseSpeed(2.0f);
+			bricksLeft--;
+			if (bricksLeft == 0) levelCompleted = true;
 		}
 	}
 
@@ -169,8 +173,8 @@ void Game::ComposeFrame()
 	pad.Draw(gfx);
 	//ball.BallHitboxDraw(gfx);
 	ball.Draw(gfx);
-	if (isGameOver)SpriteCodex::DrawGameOver(Vec2(400.0f,300.0f),gfx);
-	
+	if (isGameOver)SpriteCodex::DrawGameOver(Vec2(200,200),gfx);
+	if (levelCompleted)SpriteCodex::DrawLevelCompleted(Vec2(200.0f, 200.0f), gfx);
 }
 
 void Game::RestartGame()
@@ -190,6 +194,8 @@ void Game::RestartGame()
 	}
 	ball = Ball(Vec2(300.0f, 400.0f), Vec2(0.0f, 0.0f));
 	pad = Paddle(Vec2(400.0f, 520.0f), 80.0f, 25.0f, Colors::Magenta);
+	ball.SetSpeed(500);
 	isGameOver = false;
 	ballReleased = false;
+	levelCompleted = false;
 }

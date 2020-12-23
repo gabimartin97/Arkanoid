@@ -49,11 +49,13 @@ private:
 	
 	/********************************/
 	/*  User Variables              */
-	static constexpr int nBricks = 45;
+	
 	static constexpr int nBrickColumns = 15;
 	static constexpr int nBrickRows = 3;
+	static constexpr int nBricks = nBrickColumns * nBrickRows;
 	static constexpr int brickWidth = 40;
 	static constexpr int brickHeight = 20;
+	int bricksLeft;
 	Vec2 screenCenter = Vec2(int(gfx.ScreenWidth / 2), int(gfx.ScreenHeight) / 2);
 	Brick bricks[nBricks];
 	Ball ball;
@@ -64,6 +66,7 @@ private:
 	Sound brickHitSound;
 	bool ballReleased = false;
 	bool isGameOver = false;
+	bool levelCompleted = false;
 	
 	/********************************/
 };

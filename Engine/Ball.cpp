@@ -95,6 +95,16 @@ void Ball::ScaleVelocityVector(const Vec2 & velocity_in)
 	velocity = Vec2((velocity_in.x * speed), (velocity_in.y * speed));
 }
 
+void Ball::IncreaseSpeed(const float step)
+{
+	speed += step;
+}
+
+void Ball::SetSpeed(const float speed_in)
+{
+	speed = speed_in;
+}
+
 void Ball::Move(const Vec2 & center_in)
 {
 	position_center = center_in;
