@@ -10,7 +10,7 @@ class Paddle {
 public:
 	Paddle(const Vec2& topLeft_in, const float width_in, const float height_in, Color c_in);
 	void Draw(Graphics& gfx)const;
-	void Update(const float dt, const unsigned char data);
+	void Update(const float dt, const int data);
 	void DoWallCollision(const Wall& walls);
 	bool DoBallCollision(Ball& ball);
 	Vec2 ReturnCenter() const;

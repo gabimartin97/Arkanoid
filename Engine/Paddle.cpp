@@ -14,14 +14,14 @@ void Paddle::Draw(Graphics & gfx) const
 	gfx.DrawRect(body, c);
 }
 
-void Paddle::Update(const float dt, const unsigned char data)
+void Paddle::Update(const float dt, const int data)
 {
-	if (data == 'l') {
+	if (data == VK_LEFT) {
 		float newTopLeftX = body.topLeft.x - lateralSpeed * dt;
 		float newBottomRightX = body.bottomRight.x - lateralSpeed * dt;
 		body.Update(Vec2(newTopLeftX, body.topLeft.y), Vec2(newBottomRightX, body.bottomRight.y));
 	} else 
-		if (data == 'r') {
+		if (data == VK_RIGHT) {
 			float newTopLeftX = body.topLeft.x + lateralSpeed * dt;
 			float newBottomRightX = body.bottomRight.x + lateralSpeed * dt;
 			body.Update(Vec2(newTopLeftX, body.topLeft.y), Vec2(newBottomRightX, body.bottomRight.y));

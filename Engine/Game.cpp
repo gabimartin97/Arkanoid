@@ -79,14 +79,11 @@ void Game::UpdateModel(const float dt)
 	/*---------------------PAD-----------------------------*/
 	if (!wnd.kbd.KeyIsEmpty()) {
 		if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
-			unsigned char data = 'l';
-			pad.Update(dt, data);
-
-		}
+			pad.Update(dt, VK_LEFT);
+			}
 		else if (wnd.kbd.KeyIsPressed(VK_RIGHT)) {
-
-			unsigned char data = 'r';
-			pad.Update(dt, data);
+					
+			pad.Update(dt,VK_RIGHT);
 
 		}
 		if (wnd.kbd.KeyIsPressed(VK_SPACE) && !ballReleased)
